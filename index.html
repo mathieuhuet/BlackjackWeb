@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>Mathieu's Blackjack Game</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="game-area">
+        <div class="dealer-area">
+          <div class="dealer-title">
+            <p class="score label">Score: <span id="computer-score">0</span></p>
+            <p class="name label">Dealer</p>
+          </div>
+          <img class="dealer-1 card" src="./Images/Cards/default.png">
+          <img class="dealer-2 card" src="./Images/Cards/default.png">
+          <p class="winning-text" id="dealer-wins"></p>
+        </div>
+        <header>
+          <h1>Blackjack</h1>
+        </header>
+        <div class="player-area">
+          <div class="player-title">
+            <p class="score label">Score: <span id="human-score">0</span></p>
+            <p class="name label">You</p>
+            <img class="player-1 card" src="./Images/Cards/default.png">
+            <img class="player-2 card" src="./Images/Cards/default.png">
+          </div>
+          <div class="controls">
+            <button class="button" id="hit" disabled>Hit</button>
+            <button class="button" id="stand" disabled>Stand</button>
+          </div>
+        </div>
+      </div>
+      <div class="next-round-container">
+        <button class="button" id="playagain">Play</button>
+
+      </div>
+    </div>
+
+    <!--Instructions at the bottom of the webpage for how to play.-->
+    <div class="instructions">
+      <div class="instruction">
+        <h3>Rules</h3>
+        <p>In a game of Blackjack, you play against the dealer to get as close as possible to 21 without exceeding it.<br>If you exceed it, <u>you automatically lose.</u></p>
+      </div>
+      <div class="instruction">
+        <h3>Cards value</h3>
+        <p>All number cards equal their number.<br>Faces (Jack, Queen, King) equal 10.<br>Aces have a value of either 1 or 11.</p>
+      </div>
+      <div class="instruction">
+        <h3>The Deck of Cards</h3>
+        <p>We play with a <u>single</u> deck of 52 cards.<br>The deck is reset and reshuffled between each round.</p>
+      </div>
+    </div>
+    <div class="instructions2">
+      <div class="instruction">
+        <h3>Controls</h3>
+        <p>Press "Hit" to get an additional card.<br>Press "Stand" when you're done drawing cards.</p>
+      </div>
+      <div class="instruction">
+        <h3>Dealer behavior</h3>
+        <p>The dealer will reveal his hidden card once you're done drawing cards or if he drew a Blackjack at the beginning.<br>The dealer will draw more cards until he reaches at least 17.</p>
+      </div>
+      <div class="instruction">
+        <h3>Soft 17</h3>
+        <p>A soft 17 is when your total is equal to 17 with the help of an Ace that has a value of 11.<br><u>The dealer WILL draw on a Soft 17.</u></p>
+      </div>
+    </div>
+
+    <!--This is the JQuery Library Hosted online by google, instead of having to download it and add it to the project-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="./blackjack.js"></script>
+  </body>
+</html>
