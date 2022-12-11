@@ -10,7 +10,7 @@
       <div class="game-area">
         <div class="dealer-area">
           <div class="dealer-title">
-            <p class="score label">Score: <span id="computer-score">0</span></p>
+            <p class="score label"><span id="computer-score"></span></p>
             <p class="name label">Dealer</p>
           </div>
           <img class="dealer-1 card" src="./Images/Cards/default.png">
@@ -22,7 +22,7 @@
         </header>
         <div class="player-area">
           <div class="player-title">
-            <p class="score label">Score: <span id="human-score">0</span></p>
+            <p class="score label">Balance: <span id="human-score">5000</span>$</p>
             <p class="name label">You</p>
             <img class="player-1 card" src="./Images/Cards/default.png">
             <img class="player-2 card" src="./Images/Cards/default.png">
@@ -30,12 +30,13 @@
           <div class="controls">
             <button class="button" id="hit" disabled>Hit</button>
             <button class="button" id="stand" disabled>Stand</button>
+            <button class="button" id="bet" disabled>Bet</button>
+            <input type="number" id="human-bet" min=20 value=20 disabled>
           </div>
         </div>
       </div>
       <div class="next-round-container">
         <button class="button" id="playagain">Play</button>
-
       </div>
     </div>
 

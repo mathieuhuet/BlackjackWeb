@@ -44,15 +44,32 @@ header {
   background-color: #0d743b;
   color: #fff;
   cursor: pointer;
-  padding: 20px;
-  width: 169px;
-  height: 59px;
+  padding: 18px;
+  width: 170px;
+  height: 60px;
   border: none;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .button[disabled] {
+  background-color: #d2d2d2;
+  color: #a0a0a0;
+  cursor: default;
+}
+
+#human-bet {
+  font-size: 36px;
+  width: 140px;
+  text-align: center;
+}
+
+#bet {
+  color: #f0e7e7;
+  background-color: #af1616;
+}
+
+#bet[disabled] {
   background-color: #d2d2d2;
   color: #a0a0a0;
   cursor: default;

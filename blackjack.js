@@ -3,10 +3,10 @@ Blackjack browser game for Codeworks assignment
 by Mathieu Huet, November 23rd 2022
 */
 
-let humanHand = []
-let computerHand = []
-let humanScore = 0
-let computerScore = 0
+let humanHand = [];
+let computerHand = [];
+let humanScore = 5000;
+
 /*
 Create a object singleDeckOfCards that represent the 52cards of a deck of cards.
 It helps manage what happens to our deck of card so there's not five Aces on the board or something like that.
@@ -147,14 +147,6 @@ function reset() {
 }
 
 /*
-Update the score for when the dealer win
-*/
-function dealerWin() {
-    computerScore++;
-    $('#computer-score').text(computerScore);
-}
-
-/*
 Update the score for when the player win
 */
 function playerWin() {
@@ -166,6 +158,7 @@ function playerWin() {
 Dealer show his card and the result is displayed
 */
 function showResult() {
+    $('#playagain').text('Play Again');
     $('.dealer-2').attr('src', `./Images/Cards/${computerHand[1]}.png`);
     while(checkDealer(computerHand)){
         $('.dealer-' + computerHand.length).after(function() {
@@ -176,7 +169,6 @@ function showResult() {
     let winner = checkWinner(handTotal(humanHand), handTotal(computerHand));
     if (checkBust(handTotal(humanHand))) {
         $('h1').text('You busted 21, the dealer win.');
-        dealerWin();
     } else if (checkBust(handTotal(computerHand))) {
         $('h1').text('The dealer busted 21, YOU win!');
         playerWin();
@@ -187,10 +179,8 @@ function showResult() {
         playerWin();
     } else if (checkBlackjack(handTotal(computerHand))) {
         $('h1').text('The dealer got a Blackjack.');
-        dealerWin();
     } else if (winner === 'dealer') {
         $('h1').text('The dealer win.');
-        dealerWin();
     } else if (winner === 'player') {
         $('h1').text('YOU win!');
         playerWin();
@@ -203,23 +193,40 @@ function showResult() {
 
 //The Play/PlayAgain button
 $('#playagain').click(function() {
+    $('#bet').attr('disabled', false);
+    $('#human-bet').attr('disabled', false);
     $('h1').text("Blackjack");
     reset();
     humanHand = [singleDeckOfCards.drawCard()];
     humanHand.push(singleDeckOfCards.drawCard());
     computerHand = [singleDeckOfCards.drawCard()];
     computerHand.push(singleDeckOfCards.drawCard());
-    $('.player-1').attr('src', `./Images/Cards/${humanHand[0]}.png`);
-    $('.player-2').attr('src', `./Images/Cards/${humanHand[1]}.png`);
-    $('.dealer-1').attr('src', `./Images/Cards/${computerHand[0]}.png`);
+    $('.player-1').attr('src', `./Images/Cards/default.png`);
+    $('.player-2').attr('src', `./Images/Cards/default.png`);
+    $('.dealer-1').attr('src', `./Images/Cards/default.png`);
     $('.dealer-2').attr('src', `./Images/Cards/default.png`);
-    $('#playagain').text('Play Again');
-    if (checkBlackjack(handTotal(humanHand)) || checkBlackjack(handTotal(computerHand))) {
-        showResult();
+    $('#playagain').attr('disabled', true);
+});
+
+//The BET button
+$('#bet').click(function() {
+    if (Number($('#human-bet').val()) > humanScore) {
+        $('h1').text("You don't have enough money in your balance to make such a bet.\nTRY AGAIN WITH A LOWER BET.");
     } else {
-        $('#hit').attr('disabled', false);
-        $('#stand').attr('disabled', false);
-        $('#playagain').attr('disabled', true);
+        $('#human-bet').attr('disabled', true);
+        $('#bet').attr('disabled', true);
+        humanScore = humanScore - Number($('#human-bet').val());
+        $('#human-score').text(humanScore);
+        $('h1').text("Blackjack");
+        $('.player-1').attr('src', `./Images/Cards/${humanHand[0]}.png`);
+        $('.player-2').attr('src', `./Images/Cards/${humanHand[1]}.png`);
+        $('.dealer-1').attr('src', `./Images/Cards/${computerHand[0]}.png`);
+        if (checkBlackjack(handTotal(humanHand)) || checkBlackjack(handTotal(computerHand))) {
+            showResult();
+        } else {
+            $('#hit').attr('disabled', false);
+            $('#stand').attr('disabled', false);
+        }
     }
 });
 
