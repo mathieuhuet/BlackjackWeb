@@ -5,7 +5,8 @@ by Mathieu Huet, November 23rd 2022
 
 let humanHand = [];
 let computerHand = [];
-let humanScore = 5000;
+let humanScore = 500;
+let humanBet = 20;
 
 /*
 Create a object singleDeckOfCards that represent the 52cards of a deck of cards.
@@ -169,20 +170,29 @@ function showResult() {
     let winner = checkWinner(handTotal(humanHand), handTotal(computerHand));
     if (checkBust(handTotal(humanHand))) {
         $('h1').text('You busted 21, the dealer win.');
+
     } else if (checkBust(handTotal(computerHand))) {
-        $('h1').text('The dealer busted 21, YOU win!');
+        $('h1').text('The dealer busted 21, YOU win!\n(Balance:' + humanScore + '$ + ' + humanBet + '$x2)');
+        humanScore = humanScore + (humanBet * 2);
+        $('#human-score').text(humanScore);
         playerWin();
     } else if (winner === 'draw') {
-        $('h1').text('Draw.');
+        $('h1').text('Draw.\nRetake your bet.(Balance:' + humanScore + '$ + ' + humanBet + '$)');
+        humanScore = humanScore + humanBet;
+        $('#human-score').text(humanScore);
     } else if (checkBlackjack(handTotal(humanHand))) {
-        $('h1').text('You got a Blackjack, YOU win!');
+        $('h1').text('You got a Blackjack, YOU win!\n(Balance:' + humanScore + '$ + ' + humanBet + '$x2)');
+        humanScore = humanScore + (humanBet * 2);
+        $('#human-score').text(humanScore);
         playerWin();
     } else if (checkBlackjack(handTotal(computerHand))) {
         $('h1').text('The dealer got a Blackjack.');
     } else if (winner === 'dealer') {
         $('h1').text('The dealer win.');
     } else if (winner === 'player') {
-        $('h1').text('YOU win!');
+        $('h1').text('YOU win!\n(Balance:' + humanScore + '$ + ' + humanBet + '$x2)');
+        humanScore = humanScore + (humanBet * 2);
+        $('#human-score').text(humanScore);
         playerWin();
     }
     $('#hit').attr('disabled', true);
@@ -211,11 +221,12 @@ $('#playagain').click(function() {
 //The BET button
 $('#bet').click(function() {
     if (Number($('#human-bet').val()) > humanScore) {
-        $('h1').text("You don't have enough money in your balance to make such a bet.\nTRY AGAIN WITH A LOWER BET.");
+        $('h1').text("You don't have enough\nmoney in your balance\nto make such a bet.\nTRY AGAIN WITH A LOWER BET.");
     } else {
         $('#human-bet').attr('disabled', true);
         $('#bet').attr('disabled', true);
-        humanScore = humanScore - Number($('#human-bet').val());
+        humanBet = Number($('#human-bet').val());
+        humanScore = humanScore - humanBet;
         $('#human-score').text(humanScore);
         $('h1').text("Blackjack");
         $('.player-1').attr('src', `./Images/Cards/${humanHand[0]}.png`);
