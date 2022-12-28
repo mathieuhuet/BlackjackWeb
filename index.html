@@ -9,16 +9,15 @@
     <div class="game-container">
       <div class="game-area">
         <div class="dealer-area">
-          <div class="dealer-title">
-            <p class="dealer">Dealer</p>
-          </div>
+          <p><br></p>
           <img class="dealer-1 card" src="./Images/Cards/default.png">
           <img class="dealer-2 card" src="./Images/Cards/default.png">
           <p class="winning-text" id="dealer-wins"></p>
         </div>
-        <header>
-          <h1>Blackjack</h1>
-        </header>
+        <h1>Blackjack</h1>
+        <div class="next-round-container">
+          <button class="button" id="playagain">Play</button>
+        </div>
         <div class="player-area">
           <div class="player-title">
             <p class="score label"><br><br>Balance: <span id="human-score">500</span>$</p>
@@ -31,10 +30,12 @@
             <button class="button" id="bet" disabled>Bet</button>
             <input type="number" id="human-bet" min=20 value=20 disabled>
           </div>
+          <div class="controls 2">
+            <button class="button" id="double" disabled>Double</button>
+            <button class="button" id="split" disabled>Split</button>
+            <button class="button" id="surrender" disabled>Surrender</button>
+          </div>
         </div>
-      </div>
-      <div class="next-round-container">
-        <button class="button" id="playagain">Play</button>
       </div>
     </div>
 
@@ -53,7 +54,7 @@
         <p>We play with a <u>single</u> deck of 52 cards.<br>The deck is reset and reshuffled between each round.</p>
       </div>
     </div>
-    <div class="instructions2">
+    <div class="instructions">
       <div class="instruction">
         <h3>Controls</h3>
         <p>Press "Hit" to get an additional card.<br>Press "Stand" when you're done drawing cards.</p>
@@ -65,6 +66,20 @@
       <div class="instruction">
         <h3>Soft 17</h3>
         <p>A soft 17 is when your total is equal to 17 with the help of an Ace that has a value of 11.<br><u>The dealer WILL draw on a Soft 17.</u></p>
+      </div>
+    </div>
+    <div class="instructions">
+      <div class="instruction">
+        <h3>Split</h3>
+        <p></p>
+      </div>
+      <div class="instruction">
+        <h3>Double Down</h3>
+        <p></p>
+      </div>
+      <div class="instruction">
+        <h3>Surrender</h3>
+        <p>When you receive your hand you can surrender (but only on your first action). You get back <u>half</u> of your bet.</p>
       </div>
     </div>
 
