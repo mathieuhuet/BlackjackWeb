@@ -165,15 +165,15 @@ function showResult() {
     $('h1').text('You busted 21, the dealer win.');
   } else if (checkBust(handTotal(computerHand))) {
     $('h1').text('The dealer busted 21, YOU win!\n(Balance:' + humanScore + '$ + ' + humanBet + '$x2)');
-    humanScore = humanScore + (humanBet * 2);
+    humanScore += (humanBet * 2);
     $('#human-score').text(humanScore);
   } else if (winner === 'draw') {
     $('h1').text('Draw.\nRetake your bet.(Balance:' + humanScore + '$ + ' + humanBet + '$)');
-    humanScore = humanScore + humanBet;
+    humanScore += humanBet;
     $('#human-score').text(humanScore);
   } else if (checkBlackjack(handTotal(humanHand))) {
     $('h1').text('You got a Blackjack, YOU win!\n(Balance:' + humanScore + '$ + ' + humanBet + '$x2)');
-    humanScore = humanScore + (humanBet * 2);
+    humanScore += (humanBet * 2);
     $('#human-score').text(humanScore);
   } else if (checkBlackjack(handTotal(computerHand))) {
     $('h1').text('The dealer got a Blackjack.');
@@ -181,11 +181,13 @@ function showResult() {
     $('h1').text('The dealer win.');
   } else if (winner === 'player') {
     $('h1').text('YOU win!\n(Balance:' + humanScore + '$ + ' + humanBet + '$x2)');
-    humanScore = humanScore + (humanBet * 2);
+    humanScore += (humanBet * 2);
     $('#human-score').text(humanScore);
   }
   $('#hit').attr('disabled', true);
   $('#stand').attr('disabled', true);
+  $('#surrender').attr('disabled', true);
+  $('#double').attr('disabled', true);
   $('#playagain').attr('disabled', false);
 }
 
@@ -211,6 +213,8 @@ $('#playagain').click(function() {
 $('#bet').click(function() {
   if (Number($('#human-bet').val()) > humanScore) {
     $('h1').text("You don't have enough\nmoney in your balance\nto make such a bet.\nTRY AGAIN WITH A LOWER BET.");
+  } else if (Number($('#human-bet').val()) < 20) {
+    $('h1').text("The minimal bet is <20$>. If you don't have enough money you can refresh the page.");
   } else {
     $('#human-bet').attr('disabled', true);
     $('#bet').attr('disabled', true);
@@ -226,18 +230,22 @@ $('#bet').click(function() {
     } else {
       $('#hit').attr('disabled', false);
       $('#stand').attr('disabled', false);
+      $('#surrender').attr('disabled', false);
+      $('#double').attr('disabled', false);
     }
   }
 });
 
 //The HIT button
 $('#hit').click(function() {
+  $('#surrender').attr('disabled', true);
+  $('#double').attr('disabled', true);
   $('.player-' + humanHand.length).after(function() {
     humanHand.push(singleDeckOfCards.drawCard());
     return '\n<img class="player-' + humanHand.length + ' card" src="./Images/Cards/' + humanHand[humanHand.length - 1] + '.png">';
   });
   if (checkBust(handTotal(humanHand)) || checkBlackjack(handTotal(humanHand))) {
-    showResult()
+    showResult();
   }
 });
 
@@ -248,15 +256,29 @@ $('#stand').click(function() {
 
 //The Double button
 $('#double').click(function() {
-
+  humanScore = humanScore - humanBet;
+  humanBet += humanBet;
+  $('#human-score').text(humanScore);
+  $('.player-' + humanHand.length).after(function() {
+    humanHand.push(singleDeckOfCards.drawCard());
+    return '\n<img class="player-' + humanHand.length + ' card" src="./Images/Cards/' + humanHand[humanHand.length - 1] + '.png">';
+  });
+  showResult();
 });
 
 //The Split button
 $('#split').click(function() {
-  
+  $('#surrender').attr('disabled', true);
+  $('#double').attr('disabled', true);
 });
 
 //The Surrender button
 $('#surrender').click(function() {
-  
+  $('h1').text('You surrendered, you get half your bet back. (Balance:' + humanScore + '$ + ' + humanBet + '$/2)');
+  humanScore += (humanBet / 2);
+  $('#human-score').text(humanScore);
+  $('#hit').attr('disabled', true);
+  $('#stand').attr('disabled', true);
+  $('#surrender').attr('disabled', true);
+  $('#playagain').attr('disabled', false);
 });

@@ -67,12 +67,12 @@ h1 {
   text-align: center;
 }
 
-#bet {
+#bet, #surrender {
   color: #f0e7e7;
   background-color: #af1616;
 }
 
-#bet[disabled] {
+#bet[disabled], #surrender[disabled] {
   background-color: #d2d2d2;
   color: #a0a0a0;
   cursor: default;
