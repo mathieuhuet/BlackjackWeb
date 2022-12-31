@@ -161,7 +161,6 @@ Dealer show his card and the result is displayed
 */
 function showResult() {
   $('.dealer-2').attr('src', `./Images/Cards/${computerHand[1]}.png`);
-  $('#playagain').text('Play Again');
   while(checkDealer(computerHand)){
     $('.dealer-' + computerHand.length).after(function() {
       computerHand.push(singleDeckOfCards.drawCard());
@@ -198,17 +197,6 @@ function showResult() {
   $('#double').attr('disabled', true);
   $('#playagain').attr('disabled', false);
   $('#playagain').text('Play Again');
-}
-
-
-/*
-Draw an extra card.
-*/
-function draw () {
-  $('.player-' + humanHand.length).after(function() {
-    humanHand.push(singleDeckOfCards.drawCard());
-    return '\n<img class="player-' + humanHand.length + ' card" src="./Images/Cards/' + humanHand[humanHand.length - 1] + '.png">';
-  });
 }
 
 
@@ -258,12 +246,15 @@ $('#bet').click(function() {
     }
   }
 });
-
+ 
 //The HIT button
 $('#hit').click(function() {
   $('#surrender').attr('disabled', true);
   $('#double').attr('disabled', true);
-  setTimeout(draw, 500);
+  $('.player-' + humanHand.length).after(function() {
+    humanHand.push(singleDeckOfCards.drawCard());
+    return '\n<img class="player-' + humanHand.length + ' card" src="./Images/Cards/' + humanHand[humanHand.length - 1] + '.png">';
+  });
   if (checkBust(handTotal(humanHand)) || checkBlackjack(handTotal(humanHand))) {
     showResult();
   }
@@ -292,6 +283,9 @@ $('#split').click(function() {
   $('#double').attr('disabled', true);
   $('#split').attr('disabled', true);
   splitHumanHand = [humanHand.pop()];
+  humanHand.push(singleDeckOfCards.drawCard());
+  splitHumanHand.push(singleDeckOfCards.drawCard());
+
 });
 
 //The Surrender button
