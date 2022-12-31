@@ -4,8 +4,9 @@ by Mathieu Huet, November 23rd 2022
 */
 
 let humanHand = [];
+let splitHumanHand = [];
 let computerHand = [];
-let humanScore = 500;
+let humanScore = 100;
 let humanBet = 20;
 
 /*
@@ -93,12 +94,19 @@ Check if the Dealer should draw a card.
 function checkDealer (array) {
   array = handTotal(array);
   let draw = false;
-  for (let i = 0; i < array.length; i++){
-    if (array[i] < 17) {
+  let humanBestHand = 0;
+  let humanTotal = handTotal(humanHand);
+  for (let i = 0; i < humanTotal.length; i++) {
+    if(humanTotal[i] > humanBestHand && humanTotal[i] <= 21) {
+      humanBestHand = humanTotal[i];
+    }
+  }
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] < humanBestHand) {
       draw = true;
     }
   }
-  for (let i = 0; i < array.length; i++){
+  for (let i = 0; i < array.length; i++) {
     if (array[i] > 17 && array[i] < 22) {
       draw = false;
     }
@@ -152,8 +160,8 @@ function reset() {
 Dealer show his card and the result is displayed
 */
 function showResult() {
-  $('#playagain').text('Play Again');
   $('.dealer-2').attr('src', `./Images/Cards/${computerHand[1]}.png`);
+  $('#playagain').text('Play Again');
   while(checkDealer(computerHand)){
     $('.dealer-' + computerHand.length).after(function() {
       computerHand.push(singleDeckOfCards.drawCard());
@@ -189,6 +197,18 @@ function showResult() {
   $('#surrender').attr('disabled', true);
   $('#double').attr('disabled', true);
   $('#playagain').attr('disabled', false);
+  $('#playagain').text('Play Again');
+}
+
+
+/*
+Draw an extra card.
+*/
+function draw () {
+  $('.player-' + humanHand.length).after(function() {
+    humanHand.push(singleDeckOfCards.drawCard());
+    return '\n<img class="player-' + humanHand.length + ' card" src="./Images/Cards/' + humanHand[humanHand.length - 1] + '.png">';
+  });
 }
 
 
@@ -196,12 +216,8 @@ function showResult() {
 $('#playagain').click(function() {
   $('#bet').attr('disabled', false);
   $('#human-bet').attr('disabled', false);
-  $('h1').text("Blackjack");
+  $('h1').text("Make your bet.");
   reset();
-  humanHand = [singleDeckOfCards.drawCard()];
-  humanHand.push(singleDeckOfCards.drawCard());
-  computerHand = [singleDeckOfCards.drawCard()];
-  computerHand.push(singleDeckOfCards.drawCard());
   $('.player-1').attr('src', `./Images/Cards/default.png`);
   $('.player-2').attr('src', `./Images/Cards/default.png`);
   $('.dealer-1').attr('src', `./Images/Cards/default.png`);
@@ -216,6 +232,10 @@ $('#bet').click(function() {
   } else if (Number($('#human-bet').val()) < 20) {
     $('h1').text("The minimal bet is <20$>. If you don't have enough money you can refresh the page.");
   } else {
+    humanHand = [singleDeckOfCards.drawCard()];
+    humanHand.push(singleDeckOfCards.drawCard());
+    computerHand = [singleDeckOfCards.drawCard()];
+    computerHand.push(singleDeckOfCards.drawCard());
     $('#human-bet').attr('disabled', true);
     $('#bet').attr('disabled', true);
     humanBet = Number($('#human-bet').val());
@@ -232,6 +252,9 @@ $('#bet').click(function() {
       $('#stand').attr('disabled', false);
       $('#surrender').attr('disabled', false);
       $('#double').attr('disabled', false);
+      if (humanHand[0][0] === humanHand[1][0]) {
+        $('#split').attr('disabled', false);
+      }
     }
   }
 });
@@ -240,10 +263,7 @@ $('#bet').click(function() {
 $('#hit').click(function() {
   $('#surrender').attr('disabled', true);
   $('#double').attr('disabled', true);
-  $('.player-' + humanHand.length).after(function() {
-    humanHand.push(singleDeckOfCards.drawCard());
-    return '\n<img class="player-' + humanHand.length + ' card" src="./Images/Cards/' + humanHand[humanHand.length - 1] + '.png">';
-  });
+  setTimeout(draw, 500);
   if (checkBust(handTotal(humanHand)) || checkBlackjack(handTotal(humanHand))) {
     showResult();
   }
@@ -266,10 +286,12 @@ $('#double').click(function() {
   showResult();
 });
 
-//The Split button
+//The Split button, the complicated one...
 $('#split').click(function() {
   $('#surrender').attr('disabled', true);
   $('#double').attr('disabled', true);
+  $('#split').attr('disabled', true);
+  splitHumanHand = [humanHand.pop()];
 });
 
 //The Surrender button
@@ -280,5 +302,7 @@ $('#surrender').click(function() {
   $('#hit').attr('disabled', true);
   $('#stand').attr('disabled', true);
   $('#surrender').attr('disabled', true);
+  $('#double').attr('disabled', true);
+  $('#split').attr('disabled', true);
   $('#playagain').attr('disabled', false);
 });

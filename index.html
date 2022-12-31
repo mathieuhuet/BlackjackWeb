@@ -21,7 +21,7 @@
         </div>
         <div class="player-area">
           <div class="player-title">
-            <p class="score label"><br><br>Balance: <span id="human-score">500</span>$</p>
+            <p class="score label"><br><br>Balance: <span id="human-score">100</span>$</p>
             <img class="player-1 card" src="./Images/Cards/default.png">
             <img class="player-2 card" src="./Images/Cards/default.png">
           </div>
@@ -29,7 +29,7 @@
             <button class="button" id="hit" disabled>Hit</button>
             <button class="button" id="stand" disabled>Stand</button>
             <button class="button" id="bet" disabled>Bet</button>
-            <input type="number" id="human-bet" min=20 value=20 disabled>
+            <span class="betinput">$<input type="number" id="human-bet" min=20 value=20 disabled></span>
           </div>
           <div class="controls 2">
             <button class="button" id="double" disabled>Double</button>
@@ -62,7 +62,7 @@
       </div>
       <div class="instruction">
         <h3>Dealer behavior</h3>
-        <p>The dealer will reveal his hidden card once you're done drawing cards or if he drew a Blackjack at the beginning.<br>The dealer will draw more cards until he reaches at least 17.</p>
+        <p>The dealer will reveal his hidden card once you're done drawing cards or if he drew a Blackjack at the beginning.<br>The dealer will draw more cards until he beats you or reaches at least 17.</p>
       </div>
       <div class="instruction">
         <h3>Soft 17</h3>
@@ -71,15 +71,15 @@
     </div>
     <div class="instructions">
       <div class="instruction">
-        <h3>Split</h3>
-        <p></p>
+        <h3>Split Button</h3>
+        <p>You can split when you have to card with the same face(ex. two Kings, two eigths). Spliting makes it that both cards are now their own hand, they're independant of each other and your bet is doubled to cover both hand with the same amount as your initial bet.</p>
       </div>
       <div class="instruction">
-        <h3>Double</h3>
+        <h3>Double Button</h3>
         <p>Double let you <u>DoubleDown</u>, which means you double the amount of your bet <u>BUT you draw one extra card</u>, the dealer does his move and the round end afterwards.</p>
       </div>
       <div class="instruction">
-        <h3>Surrender</h3>
+        <h3>Surrender Button</h3>
         <p>When you receive your hand you can surrender (but only on your first action). You get back <u>half</u> of your bet.</p>
       </div>
     </div>
