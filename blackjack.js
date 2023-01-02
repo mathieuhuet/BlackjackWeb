@@ -101,8 +101,11 @@ function checkDealer (array) {
       humanBestHand = humanTotal[i];
     }
   }
+  if (humanBestHand > 16) {
+    humanBestHand = 16;
+  }
   for (let i = 0; i < array.length; i++) {
-    if (array[i] < humanBestHand) {
+    if (array[i] <= humanBestHand) {
       draw = true;
     }
   }
