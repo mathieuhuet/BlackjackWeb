@@ -1,4 +1,4 @@
-### Launch the app
+# Launch the app
 
 Open the `index.html` file in a browser to launch the app.
 
